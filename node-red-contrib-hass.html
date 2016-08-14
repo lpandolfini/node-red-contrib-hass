@@ -1,0 +1,87 @@
+<script type="text/x-red" data-template-name="hass-config">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> Server</label>
+        <input type="text" id="node-config-input-host" placeholder="http://localhost" style="width: 40%;">
+        <label for="node-config-input-port" style="margin-left: 10px; width: 35px;"><i class="fa"></i> Port</label>
+        <input type="text" id="node-config-input-port" style="width:45px">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-apipassword"><i class="fa fa-lock"></i> API password</label>
+        <input type="text" id="node-config-input-apipassword">
+    </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('hass-config',{
+    category: 'config',
+    defaults: {
+        host: {value: "http://localhost", required: true},
+        port: {value: 8123, required: true, validate:RED.validators.number()},
+    },
+    credentials: {
+        apipassword: {type: "password"}
+    },
+    label: function() {
+        return this.host + ":" + this.port;
+    }
+  });
+</script>
+
+<script type="text/x-red" data-template-name="hass-post">
+    <div class="form-row">
+        <label for="node-input-endpoint"><i class="fa fa-globe"></i> Endpoint</label>
+        <input type="text" id="node-input-endpoint">
+    </div>
+    <div class="form-row">
+        <label for="node-input-entityid"><i class="fa fa-tag"></i> Entity ID</label>
+        <input type="text" id="node-input-entityid">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="hass-post">
+    <p>
+        Publishes <b>msg.payload</b> via POST to HomeAssistant using the RESTful API<br/>
+        The API method called is /api/states/&lt;entity_id&gt;
+    </p>
+    <p>
+        <b>msg.payload</b> must be a JSON object with at least a <i>state</i> attribute:
+        <pre>
+{
+    "state": "custom_state",
+    "attributes": {
+        "attr1":"value1",
+        "attr2":"value2"
+    }
+}
+        </pre>
+        If needed, also a <i>unit_of_measurement</i> attribute can be set.
+    </p>
+    <p>More info on the API <a href="https://home-assistant.io/developers/rest_api/" target="_blank">here</a>.
+    <p><b>EntityId</b> must be set in the node or in <code>msg.entityid</code></p>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('hass-post',{
+    category: 'output',
+    color:"#C0DEED",
+    inputs:1,
+    outputs:0,
+    icon: 'home-assistant.png',
+    align: "right",
+    label: function() {
+        return this.name||"hass-post";
+    },
+    labelStyle: function() {
+        return this.name?"node_label_italic":"";
+    },
+    defaults: {
+        endpoint: {type: "hass-config", required: true},
+        entityid: {value: "", required: false},
+        name: {value: "", required: false}
+    }
+  });
+</script>
