@@ -3,7 +3,8 @@ Node-RED node to publish states directly to **Home-Assistant** (https://home-ass
 
 ##Usage
 Publishes **msg.payload** via POST to HomeAssistant using the RESTful API
-The API method called is */api/states/<entity_id>*
+
+The API method called is `/api/states/<entity_id>`
 
 **msg.payload** must be a JSON object with at least a state attribute:
 ```
