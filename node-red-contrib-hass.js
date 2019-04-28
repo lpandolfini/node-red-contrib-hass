@@ -68,7 +68,7 @@ module.exports = function(RED) {
             opts.headers = {};
             opts.headers['content-type'] = "application/json";
             if (node.apipassword) {
-                opts.headers['x-ha-access'] = node.apipassword;
+                 opts.headers['authorization'] = "Bearer " + node.apipassword;
             }
 
             var payload = null;
