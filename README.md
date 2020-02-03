@@ -31,4 +31,4 @@ The configuration of the Home Assistant server must be specified in a configurat
 The configuration parameters are:
 - server (defaults to http://localhost)
 - port (defaults to 8123)
-- API password
+- Long-Lived Access Token

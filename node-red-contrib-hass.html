@@ -6,8 +6,8 @@
         <input type="text" id="node-config-input-port" style="width:45px">
     </div>
     <div class="form-row">
-        <label for="node-config-input-apipassword"><i class="fa fa-lock"></i> API password</label>
-        <input type="text" id="node-config-input-apipassword">
+        <label for="node-config-input-accesstoken"><i class="fa fa-lock"></i> Access Token</label>
+        <input type="text" id="node-config-input-accesstoken">
     </div>
 </script>
 
@@ -19,7 +19,7 @@
         port: {value: 8123, required: true, validate:RED.validators.number()},
     },
     credentials: {
-        apipassword: {type: "password"}
+        accesstoken: {type: "password"}
     },
     label: function() {
         return this.host + ":" + this.port;

@@ -13,12 +13,16 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,n);
         this.host = n.host;
         this.port = n.port;
-        if (this.credentials && this.credentials.apipassword) {
-            this.apipassword = this.credentials.apipassword;
+        if (this.credentials && this.credentials.accesstoken) {
+            this.accesstoken = this.credentials.accesstoken;
         }
     }
 
-    RED.nodes.registerType('hass-config', HassConfigNode, {credentials: {apipassword: {type: "password"}}});
+    RED.nodes.registerType('hass-config', HassConfigNode, {
+        credentials: {
+            accesstoken: {type: "password"}
+        }
+    });
 
 
     function HassPostNode(n) {
@@ -31,7 +35,7 @@ module.exports = function(RED) {
         node.config = n;
         node.entityid = n.entityid;
         node.endpoint = RED.nodes.getNode(n.endpoint);
-        if (node.endpoint.apipassword) node.apipassword = node.endpoint.apipassword;
+        if (node.endpoint.accesstoken) node.accesstoken = node.endpoint.accesstoken;
 
         var prox, noprox;
         if (process.env.http_proxy != null) { prox = process.env.http_proxy; }
@@ -67,8 +71,8 @@ module.exports = function(RED) {
             opts.method = "POST";
             opts.headers = {};
             opts.headers['content-type'] = "application/json";
-            if (node.apipassword) {
-                opts.headers['x-ha-access'] = node.apipassword;
+            if (node.accesstoken) {
+                opts.headers['Authorization'] = "Bearer " + node.accesstoken;
             }
 
             var payload = null;
