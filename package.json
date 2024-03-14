@@ -5,7 +5,7 @@
   "description": "Home-Assistant POST Node",
   "license": "Apache",
   "dependencies": {
-    "follow-redirects": "0.1.0"
+    "follow-redirects": "1.15.6"
   },
   "repository": {
     "type": "git",
